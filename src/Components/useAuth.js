@@ -80,7 +80,7 @@ const AuthProvider = ({ children }) => {
 				pathname.indexOf("signin") !== -1 ||
 				pathname.indexOf("signup") !== -1
 			)
-				navigate("/chat", { replace: true })
+				navigate("/", { replace: true })
 		} else
 			Toast.fire({
 				icon: "error",
