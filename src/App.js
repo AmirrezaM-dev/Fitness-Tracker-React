@@ -3,7 +3,7 @@ import {
 	Route,
 	useLocation,
 	useNavigate,
-	useRoutes,
+	// useRoutes,
 } from "react-router-dom"
 
 import { useEffect } from "react"
@@ -12,6 +12,9 @@ import { useAuth } from "./Components/useAuth"
 import PreLoader from "./Pages/PreLoader"
 import LoginForm from "./Pages/LoginForm"
 import SignUpForm from "./Pages/SignUpForm"
+import Dashboard from "./Pages/Dashboard"
+import SetLogs from "./Pages/SetLogs"
+import Navigation from "./Components/Navigation"
 
 const App = () => {
 	const { showPreloader } = useMain()
@@ -31,10 +34,17 @@ const App = () => {
 	return !firstLogin || showPreloader ? (
 		<PreLoader />
 	) : (
-		<Routes>
-			<Route path={"/signin"} element={<LoginForm />} />
-			<Route path={"/signup"} element={<SignUpForm />} />
-		</Routes>
+		<>
+			<Navigation />
+			<div className="pt-5">
+				<Routes>
+					<Route path={"/signin"} element={<LoginForm />} />
+					<Route path={"/signup"} element={<SignUpForm />} />
+					<Route path={"/"} element={<Dashboard />} />
+					<Route path={"/set"} element={<SetLogs />} />
+				</Routes>
+			</div>
+		</>
 	)
 }
 
