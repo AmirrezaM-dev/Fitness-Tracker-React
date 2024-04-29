@@ -3,6 +3,7 @@ import { Link } from "react-router-dom"
 import { useAuth } from "../Components/useAuth"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faSpinner } from "@fortawesome/free-solid-svg-icons"
+import { GoogleLogin } from "@react-oauth/google"
 
 const SignUpForm = () => {
 	const {
@@ -12,6 +13,7 @@ const SignUpForm = () => {
 		validator,
 		loadingLogin,
 		onSignUpSubmit,
+		onLoginSubmit,
 	} = useAuth()
 
 	return (
@@ -85,6 +87,23 @@ const SignUpForm = () => {
 									Already have an account?{" "}
 									<Link to="/signin">Log in</Link>
 								</p>
+							</div>
+							<div
+								className={`google-auth ${
+									!firstLogin || loadingLogin ? "d-none" : ""
+								}`}
+							>
+								<GoogleLogin
+									onSuccess={
+										onLoginSubmit /* (credentialResponse) => {
+										console.log(credentialResponse)
+										setLoadingLogin(true)
+									} */
+									}
+									onError={() => {
+										console.log("Login Failed")
+									}}
+								/>
 							</div>
 						</div>
 					</Col>

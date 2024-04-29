@@ -13,7 +13,6 @@ const LoginForm = () => {
 		validator,
 		loadingLogin,
 		onLoginSubmit,
-		setLoadingLogin,
 	} = useAuth()
 
 	return (
