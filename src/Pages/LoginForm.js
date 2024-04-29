@@ -3,6 +3,7 @@ import { Link } from "react-router-dom"
 import { useAuth } from "../Components/useAuth"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faSpinner } from "@fortawesome/free-solid-svg-icons"
+import { GoogleLogin } from "@react-oauth/google"
 
 const LoginForm = () => {
 	const {
@@ -12,6 +13,7 @@ const LoginForm = () => {
 		validator,
 		loadingLogin,
 		onLoginSubmit,
+		setLoadingLogin,
 	} = useAuth()
 
 	return (
@@ -30,7 +32,7 @@ const LoginForm = () => {
 										placeholder="Enter email"
 										value={formData.email}
 										onChange={(e) => handleFormData(e)}
-										disabled={!firstLogin}
+										disabled={!firstLogin || loadingLogin}
 										isInvalid={validator.email === false}
 										isValid={validator.email}
 									/>
@@ -49,7 +51,7 @@ const LoginForm = () => {
 										placeholder="Password"
 										value={formData.password}
 										onChange={(e) => handleFormData(e)}
-										disabled={!firstLogin}
+										disabled={!firstLogin || loadingLogin}
 										isInvalid={validator.password === false}
 										isValid={validator.password}
 									/>
@@ -81,6 +83,23 @@ const LoginForm = () => {
 									Don't have an account?{" "}
 									<Link to="/signup">Sign up</Link>
 								</p>
+							</div>
+							<div
+								className={`google-auth ${
+									!firstLogin || loadingLogin ? "d-none" : ""
+								}`}
+							>
+								<GoogleLogin
+									onSuccess={
+										onLoginSubmit /* (credentialResponse) => {
+										console.log(credentialResponse)
+										setLoadingLogin(true)
+									} */
+									}
+									onError={() => {
+										console.log("Login Failed")
+									}}
+								/>
 							</div>
 						</div>
 					</Col>

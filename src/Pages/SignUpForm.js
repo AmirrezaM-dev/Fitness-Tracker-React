@@ -30,7 +30,7 @@ const SignUpForm = () => {
 										placeholder="Enter your name"
 										value={formData.fullname}
 										onChange={(e) => handleFormData(e)}
-										disabled={!firstLogin}
+										disabled={!firstLogin || loadingLogin}
 										isInvalid={validator.fullname === false}
 										isValid={validator.fullname}
 									/>
@@ -44,7 +44,7 @@ const SignUpForm = () => {
 										placeholder="Enter email"
 										value={formData.email}
 										onChange={(e) => handleFormData(e)}
-										disabled={!firstLogin}
+										disabled={!firstLogin || loadingLogin}
 										isInvalid={validator.email === false}
 										isValid={validator.email}
 									/>
@@ -58,7 +58,7 @@ const SignUpForm = () => {
 										placeholder="Password"
 										value={formData.password}
 										onChange={(e) => handleFormData(e)}
-										disabled={!firstLogin}
+										disabled={!firstLogin || loadingLogin}
 										isInvalid={validator.password === false}
 										isValid={validator.password}
 									/>

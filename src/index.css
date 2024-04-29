@@ -100,3 +100,8 @@ h4 {
   font-weight: bold;
   margin-left: 10px;
 }
+.google-auth div div iframe{
+	margin-left: auto !important;
+	margin-right: auto !important;
+	margin-top: 15px !important;
+}

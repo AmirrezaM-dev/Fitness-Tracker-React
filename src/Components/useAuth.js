@@ -3,6 +3,7 @@ import axios from "axios"
 import { useLocation, useNavigate } from "react-router-dom"
 import Cookies from "universal-cookie"
 import { useMain } from "./useMain"
+import { googleLogout } from "@react-oauth/google"
 
 const AuthContent = React.createContext()
 
@@ -178,6 +179,7 @@ const AuthProvider = ({ children }) => {
 			authApi
 				.get(`/api/users/logout/`)
 				.then(() => {
+					googleLogout()
 					setUser({})
 					setLoggedIn(false)
 					cookies.remove("cs")
@@ -200,6 +202,7 @@ const AuthProvider = ({ children }) => {
 	useEffect(() => {
 		if (loggedIn === undefined) {
 			if (cookies.get("cs")) setTemporaryAuthCookie(cookies.get("cs"))
+
 			authApi
 				.get(`/api/users/get/`)
 				.then(loginHandler)
@@ -214,55 +217,66 @@ const AuthProvider = ({ children }) => {
 	}, [loadingLogin, loggedIn, pathname, user])
 
 	const onLoginSubmit = (e) => {
-		e.preventDefault()
-		if (
-			formData?.email &&
-			regExEmail.test(formData.email) &&
-			formData?.password
-		) {
-			setValidator((validator) => {
-				return {
-					...validator,
-					email: true,
-					password: true,
-				}
-			})
-			login(formData)
+		if (e.credential) {
+			authApi
+				.post(`/api/users/googleLogin/`, e)
+				.then(loginHandler)
+				.catch(loginCatchHandler)
+				.finally(() => {
+					setFirstLogin(true)
+				})
 		} else {
-			!formData?.email
-				? setValidator((validator) => {
-						return {
-							...validator,
-							email: false,
-						}
-				  })
-				: regExEmail.test(formData.email)
-				? setValidator((validator) => {
-						return {
-							...validator,
-							email: true,
-						}
-				  })
-				: setValidator((validator) => {
-						return {
-							...validator,
-							email: false,
-							emailFeedback: "Please enter a valid email address",
-						}
-				  })
-			!formData?.password
-				? setValidator((validator) => {
-						return {
-							...validator,
-							password: false,
-						}
-				  })
-				: setValidator((validator) => {
-						return {
-							...validator,
-							password: true,
-						}
-				  })
+			e.preventDefault()
+			if (
+				formData?.email &&
+				regExEmail.test(formData.email) &&
+				formData?.password
+			) {
+				setValidator((validator) => {
+					return {
+						...validator,
+						email: true,
+						password: true,
+					}
+				})
+				login(formData)
+			} else {
+				!formData?.email
+					? setValidator((validator) => {
+							return {
+								...validator,
+								email: false,
+							}
+					  })
+					: regExEmail.test(formData.email)
+					? setValidator((validator) => {
+							return {
+								...validator,
+								email: true,
+							}
+					  })
+					: setValidator((validator) => {
+							return {
+								...validator,
+								email: false,
+								emailFeedback:
+									"Please enter a valid email address",
+							}
+					  })
+				!formData?.password
+					? setValidator((validator) => {
+							return {
+								...validator,
+								password: false,
+							}
+					  })
+					: setValidator((validator) => {
+							return {
+								...validator,
+								password: true,
+							}
+					  })
+			}
 		}
 	}
 
@@ -355,6 +369,7 @@ const AuthProvider = ({ children }) => {
 				temporaryAuthCookie,
 				onLoginSubmit,
 				onSignUpSubmit,
+				setLoadingLogin,
 			}}
 		>
 			{children}
