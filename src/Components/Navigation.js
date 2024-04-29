@@ -17,9 +17,6 @@ const Navigation = () => {
 					<Nav.Link as={Link} to="/set">
 						Set workout
 					</Nav.Link>
-					<Nav.Link as={Link} to="/history">
-						Workout History
-					</Nav.Link>
 				</Nav>
 			</Navbar.Collapse>
 		</Navbar>

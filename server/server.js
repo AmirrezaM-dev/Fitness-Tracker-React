@@ -49,6 +49,7 @@ server.once("close", function () {
 	app.use(express.urlencoded({ extended: false }))
 
 	app.use("/api/users", require("./routes/userRoutes"))
+	app.use("/api/workoutLogs", require("./routes/workoutLogsRoutes"))
 
 	app.use(errorHandler)
 

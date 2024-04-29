@@ -2,23 +2,6 @@ import React from "react"
 import { Container, Row, Col, Card } from "react-bootstrap"
 
 const Dashboard = () => {
-	const data = {
-		today: {
-			setsCompleted: 3,
-			avgCalories: 150,
-		},
-		lastWeek: {
-			setsCompleted: 20,
-			avgCalories: 140,
-		},
-		lastMonth: {
-			setsCompleted: 90,
-			avgCalories: 130,
-		},
-	}
-
-	const { today, lastWeek, lastMonth } = data
-
 	return (
 		<Container className="mt-5 pt-5">
 			<h1>Fitness Dashboard</h1>
@@ -28,9 +11,12 @@ const Dashboard = () => {
 						<Card.Body>
 							<Card.Title>Today</Card.Title>
 							<Card.Text>
-								Sets Completed: {today.setsCompleted} <br />
-								Calories Burned: {today.avgCalories} <br />
-								Calories Consumed: {today.avgCalories}
+								Sets Completed: This feature will be available
+								soon <br />
+								Calories Burned: This feature will be available
+								soon <br />
+								Calories Consumed: This feature will be
+								available soon
 							</Card.Text>
 						</Card.Body>
 					</Card>
@@ -40,8 +26,12 @@ const Dashboard = () => {
 						<Card.Body>
 							<Card.Title>Last Week</Card.Title>
 							<Card.Text>
-								Sets Completed: {lastWeek.setsCompleted} <br />
-								Average Calories: {lastWeek.avgCalories}
+								Sets Completed: This feature will be available
+								soon <br />
+								Calories Burned: This feature will be available
+								soon <br />
+								Calories Consumed: This feature will be
+								available soon
 							</Card.Text>
 						</Card.Body>
 					</Card>
@@ -51,8 +41,12 @@ const Dashboard = () => {
 						<Card.Body>
 							<Card.Title>Last Month</Card.Title>
 							<Card.Text>
-								Sets Completed: {lastMonth.setsCompleted} <br />
-								Average Calories: {lastMonth.avgCalories}
+								Sets Completed: This feature will be available
+								soon <br />
+								Calories Burned: This feature will be available
+								soon <br />
+								Calories Consumed: This feature will be
+								available soon
 							</Card.Text>
 						</Card.Body>
 					</Card>
