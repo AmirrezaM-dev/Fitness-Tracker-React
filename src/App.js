@@ -36,7 +36,7 @@ const App = () => {
 	) : (
 		<>
 			<Navigation />
-			<div className="pt-5">
+			<div className={loggedIn ? "pt-5" : ""}>
 				<Routes>
 					<Route path={"/signin"} element={<LoginForm />} />
 					<Route path={"/signup"} element={<SignUpForm />} />
