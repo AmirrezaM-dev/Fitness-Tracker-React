@@ -21,6 +21,7 @@ const MainComponent = ({ children }) => {
 	const [selectedDate, setSelectedDate] = useState(null)
 	const [selectedMuscle, setSelectedMuscle] = useState(null)
 	const [selectedWorkout, setSelectedWorkout] = useState(null)
+	const [showPreloader, setShowPreloader] = useState(null)
 	const handleDateChange = (date) => {
 		setSelectedDate(date)
 	}
@@ -41,6 +42,8 @@ const MainComponent = ({ children }) => {
 				handleDateChange,
 				handleMuscleSelect,
 				handleWorkoutSelect,
+				showPreloader,
+				setShowPreloader,
 			}}
 		>
 			{children}
