@@ -1,4 +1,4 @@
-# Chat-React-App
+# Fitness-Tracker-React-Node
 
 [Live Demo](https://fitness-tracker.tdem.ir/) - The initial visit may take up to 1 minute to load. Please be patient.
 
