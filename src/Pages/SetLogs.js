@@ -31,7 +31,7 @@ const SetLogs = () => {
 	}
 	useEffect(() => {
 		if (Math.ceil(workoutLogs.length / itemsPerPage) < currentPage)
-			setCurrentPage(Math.ceil(workoutLogs.length / itemsPerPage))
+			setCurrentPage(Math.ceil(workoutLogs.length / itemsPerPage) + 1)
 	}, [workoutLogs, currentPage])
 
 	const {
@@ -326,77 +326,83 @@ const SetLogs = () => {
 							</Form>
 						</Container>
 					</Container>
-					<Container className="mt-4 text-center">
-						<Table striped bordered hover responsive>
-							<thead>
-								<tr>
-									<th>Weight</th>
-									<th>Reps</th>
-									<th>Duration</th>
-									<th></th>
-								</tr>
-							</thead>
-							<tbody>
-								{currentItems.map((item, index) => (
-									<tr key={index}>
-										<td>{item.weight}</td>
-										<td>{item.reps}</td>
-										<td>{item.duration}</td>
-										<td>
-											<FontAwesomeIcon
-												onClick={() => {
-													authApi
-														.post(
-															"/api/workoutLogs/delete",
-															{ id: item._id }
-														)
-														.then(() => {
-															setWorkoutLogs(
-																(
-																	workoutLogs
-																) => {
-																	return [
-																		...workoutLogs.filter(
-																			(
-																				val
-																			) =>
-																				val._id !==
-																				item._id
-																		),
-																	]
-																}
-															)
-														})
-												}}
-												icon={faX}
-												className="mx-1 cursor-pointer"
-											/>
-										</td>
+					{currentItems.length && (
+						<Container className="mt-4 text-center">
+							<Table striped bordered hover responsive>
+								<thead>
+									<tr>
+										<th>Weight</th>
+										<th>Reps</th>
+										<th>Duration</th>
+										<th></th>
 									</tr>
-								))}
-							</tbody>
-						</Table>
-						{/* Pagination component */}
-						<div className="d-flex justify-content-center">
-							<Pagination>
-								{Array(
-									Math.ceil(workoutLogs.length / itemsPerPage)
-								)
-									.fill()
-									.map((_, index) => (
-										<Pagination.Item
-											key={index + 1}
-											active={index + 1 === currentPage}
-											onClick={() =>
-												handlePageChange(index + 1)
-											}
-										>
-											{index + 1}
-										</Pagination.Item>
+								</thead>
+								<tbody>
+									{currentItems.map((item, index) => (
+										<tr key={index}>
+											<td>{item.weight}</td>
+											<td>{item.reps}</td>
+											<td>{item.duration}</td>
+											<td>
+												<FontAwesomeIcon
+													onClick={() => {
+														authApi
+															.post(
+																"/api/workoutLogs/delete",
+																{ id: item._id }
+															)
+															.then(() => {
+																setWorkoutLogs(
+																	(
+																		workoutLogs
+																	) => {
+																		return [
+																			...workoutLogs.filter(
+																				(
+																					val
+																				) =>
+																					val._id !==
+																					item._id
+																			),
+																		]
+																	}
+																)
+															})
+													}}
+													icon={faX}
+													className="mx-1 cursor-pointer"
+												/>
+											</td>
+										</tr>
 									))}
-							</Pagination>
-						</div>
-					</Container>
+								</tbody>
+							</Table>
+							{/* Pagination component */}
+							<div className="d-flex justify-content-center">
+								<Pagination>
+									{Array(
+										Math.ceil(
+											workoutLogs.length / itemsPerPage
+										)
+									)
+										.fill()
+										.map((_, index) => (
+											<Pagination.Item
+												key={index + 1}
+												active={
+													index + 1 === currentPage
+												}
+												onClick={() =>
+													handlePageChange(index + 1)
+												}
+											>
+												{index + 1}
+											</Pagination.Item>
+										))}
+								</Pagination>
+							</div>
+						</Container>
+					)}
 				</>
 			)}
 		</div>

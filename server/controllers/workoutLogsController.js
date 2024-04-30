@@ -21,13 +21,14 @@ const save = expressAsyncHandler(async (req, res) => {
 	}
 })
 const get = expressAsyncHandler(async (req, res) => {
-	const { selectedDate, selectedWorkout } = req.body
-
-	const workoutLogs = await WorkoutLogs.find({
-		user: req.user.id,
-		selectedDate,
-		selectedWorkout,
-	}).select("-user -selectedDate -selectedWorkout -createdAt -updatedAt -__v")
+	const { selectedDate, selectedWorkout, searchTerm, numColumns } = req.body
+	let find = { user: req.user.id }
+	if (selectedDate) find = { ...find, selectedDate }
+	if (selectedWorkout) find = { ...find, selectedWorkout }
+	if (searchTerm) find = { ...find, $text: { $search: searchTerm } }
+	const workoutLogs = await WorkoutLogs.find(find)
+		.select("-user -createdAt -updatedAt -__v")
+		.limit(numColumns || 10)
 	if (workoutLogs) {
 		res.status(200).json({ workoutLogs })
 	} else {

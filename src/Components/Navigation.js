@@ -7,7 +7,13 @@ const Navigation = () => {
 	const { loggedIn, logout } = useAuth()
 	return (
 		loggedIn && (
-			<Navbar bg="dark" variant="dark" expand="lg" fixed="top">
+			<Navbar
+				bg="dark"
+				variant="dark"
+				expand="lg"
+				fixed="top"
+				className="px-md-5"
+			>
 				<Navbar.Brand as={Link} to="#">
 					Fitness Tracker
 				</Navbar.Brand>

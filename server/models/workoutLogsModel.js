@@ -11,6 +11,7 @@ const workoutLogsSchema = mongoose.Schema(
 		},
 		selectedWorkout: {
 			type: String,
+			index: true,
 		},
 		weight: {
 			type: String,
@@ -24,4 +25,7 @@ const workoutLogsSchema = mongoose.Schema(
 	},
 	{ timestamps: true }
 )
+workoutLogsSchema.index({
+	selectedWorkout: "text",
+})
 module.exports = mongoose.model("WorkoutLogs", workoutLogsSchema)
