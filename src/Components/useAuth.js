@@ -218,11 +218,13 @@ const AuthProvider = ({ children }) => {
 
 	const onLoginSubmit = (e) => {
 		if (e.credential) {
+			setLoadingLogin(true)
 			authApi
 				.post(`/api/users/googleLogin/`, e)
 				.then(loginHandler)
 				.catch(loginCatchHandler)
 				.finally(() => {
+					setLoadingLogin(false)
 					setFirstLogin(true)
 				})
 		} else {
