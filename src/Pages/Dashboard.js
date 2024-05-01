@@ -3,94 +3,62 @@ import {
 	Container,
 	Row,
 	Col,
-	// Card,
 	Table,
 	Form,
 	DropdownButton,
 	Dropdown,
+	Pagination,
 } from "react-bootstrap"
 import { useAuth } from "../Components/useAuth"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faX } from "@fortawesome/free-solid-svg-icons"
+import { faSpinner, faX } from "@fortawesome/free-solid-svg-icons"
 
 const Dashboard = () => {
 	const { authApi } = useAuth()
+	const [isDeleting, setIsDeleting] = useState([])
 	const [workoutHistory, setWorkoutHistory] = useState([])
 	const [searchTerm, setSearchTerm] = useState("")
-	const [numColumns, setNumColumns] = useState(10) // Default number of columns per row
-	const [filteredWorkouts, setFilteredWorkouts] = useState([])
+	const [currentPage, setCurrentPage] = useState(1)
+	const [totalItems, setTotalItems] = useState(0)
+	const [itemsPerPage, setItemsPerPage] = useState(10) // Number of items per page
 
 	useEffect(() => {
 		authApi
-			.post("/api/workoutLogs/get", { searchTerm, numColumns })
+			.post("/api/workoutLogs/get", {
+				searchTerm,
+				numColumns: itemsPerPage,
+				currentPage,
+			})
 			.then((response) => {
 				setWorkoutHistory(response.data.workoutLogs)
 			})
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [searchTerm, numColumns])
-
+	}, [searchTerm, itemsPerPage, currentPage])
 	useEffect(() => {
-		setFilteredWorkouts(workoutHistory)
-	}, [workoutHistory])
+		authApi
+			.post("/api/workoutLogs/getCount", {
+				searchTerm,
+			})
+			.then((response) => {
+				setTotalItems(response.data.count)
+			})
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [searchTerm, itemsPerPage])
 
 	const handleSearch = (e) => {
 		const term = e.target.value
 		setSearchTerm(term)
 	}
+
 	const handleColumnSelect = (num) => {
-		setNumColumns(num)
+		setItemsPerPage(num)
 	}
+
+	const paginate = (pageNumber) => setCurrentPage(pageNumber)
 
 	return (
 		<Container className="mt-5 pt-5">
 			<h1>Fitness Dashboard</h1>
-			{/* <Row className="mt-4">
-				<Col>
-					<Card>
-						<Card.Body>
-							<Card.Title>Today</Card.Title>
-							<Card.Text>
-								Sets Completed: This feature will be available
-								soon <br />
-								Calories Burned: This feature will be available
-								soon <br />
-								Calories Consumed: This feature will be
-								available soon
-							</Card.Text>
-						</Card.Body>
-					</Card>
-				</Col>
-				<Col>
-					<Card>
-						<Card.Body>
-							<Card.Title>Last Week</Card.Title>
-							<Card.Text>
-								Sets Completed: This feature will be available
-								soon <br />
-								Calories Burned: This feature will be available
-								soon <br />
-								Calories Consumed: This feature will be
-								available soon
-							</Card.Text>
-						</Card.Body>
-					</Card>
-				</Col>
-				<Col>
-					<Card>
-						<Card.Body>
-							<Card.Title>Last Month</Card.Title>
-							<Card.Text>
-								Sets Completed: This feature will be available
-								soon <br />
-								Calories Burned: This feature will be available
-								soon <br />
-								Calories Consumed: This feature will be
-								available soon
-							</Card.Text>
-						</Card.Body>
-					</Card>
-				</Col>
-			</Row> */}
 			<Row>
 				<Col>
 					<div className="mt-4">
@@ -107,7 +75,7 @@ const Dashboard = () => {
 								<Col md={3} className="text-end">
 									<DropdownButton
 										id="dropdown-columns"
-										title={`Columns per row: ${numColumns}`}
+										title={`Columns per row: ${itemsPerPage}`}
 									>
 										{[10, 25, 50, 100].map((num) => (
 											<Dropdown.Item
@@ -128,15 +96,15 @@ const Dashboard = () => {
 							<thead>
 								<tr>
 									<th>Workout Name</th>
-									<th>Weight (lbs)</th>
+									<th>Weight</th>
 									<th>Reps</th>
-									<th>Duration (minutes)</th>
+									<th>Duration</th>
 									<th>Date</th>
 									<th></th>
 								</tr>
 							</thead>
 							<tbody>
-								{filteredWorkouts.map((workout, index) => (
+								{workoutHistory.map((workout, index) => (
 									<tr key={index}>
 										<td>{workout.selectedWorkout}</td>
 										<td>{workout.weight}</td>
@@ -146,12 +114,103 @@ const Dashboard = () => {
 											{workout.selectedDate.split("T")[0]}
 										</td>
 										<td className="text-center">
-											<FontAwesomeIcon icon={faX} />
+											<FontAwesomeIcon
+												onClick={() => {
+													if (
+														!isDeleting.indexOf(
+															workout._id
+														) > -1
+													) {
+														setIsDeleting(
+															(isDeleting) => {
+																return [
+																	...isDeleting,
+																	workout._id,
+																]
+															}
+														)
+														authApi
+															.post(
+																"/api/workoutLogs/delete",
+																{
+																	id: workout._id,
+																}
+															)
+															.then(() => {
+																setTotalItems(
+																	(
+																		totalItems
+																	) =>
+																		totalItems -
+																		1
+																)
+																setWorkoutHistory(
+																	(
+																		workoutLogs
+																	) => {
+																		return [
+																			...workoutLogs.filter(
+																				(
+																					val
+																				) =>
+																					val._id !==
+																					workout._id
+																			),
+																		]
+																	}
+																)
+															})
+													}
+												}}
+												disabled={
+													isDeleting.indexOf(
+														workout._id
+													) > -1
+												}
+												icon={
+													isDeleting.indexOf(
+														workout._id
+													) > -1
+														? faSpinner
+														: faX
+												}
+												spin={
+													isDeleting.indexOf(
+														workout._id
+													) > -1
+														? true
+														: false
+												}
+												className={`mx-1 ${
+													isDeleting.indexOf(
+														workout._id
+													) > -1
+														? ""
+														: "cursor-pointer"
+												}`}
+											/>
 										</td>
 									</tr>
 								))}
 							</tbody>
 						</Table>
+
+						{/* Pagination */}
+						<div className="d-flex justify-content-center">
+							<Pagination>
+								{Array(Math.ceil(totalItems / itemsPerPage))
+									.fill()
+									.map((_, index) => (
+										<Pagination.Item
+											key={index + 1}
+											active={index + 1 === currentPage}
+											onClick={() => paginate(index + 1)}
+										>
+											{index + 1}
+										</Pagination.Item>
+									))}
+							</Pagination>
+						</div>
 					</div>
 				</Col>
 			</Row>

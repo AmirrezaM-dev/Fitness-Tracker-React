@@ -18,7 +18,9 @@ const MainComponent = ({ children }) => {
 			toast.addEventListener("mouseleave", Swal.resumeTimer)
 		},
 	})
-	const [selectedDate, setSelectedDate] = useState(null)
+	const [selectedDate, setSelectedDate] = useState(
+		new Date().toISOString().slice(0, 10).replace(/-/g, "/")
+	)
 	const [selectedMuscle, setSelectedMuscle] = useState(null)
 	const [selectedWorkout, setSelectedWorkout] = useState(null)
 	const [showPreloader, setShowPreloader] = useState(null)

@@ -12,6 +12,7 @@ export function useAuth() {
 }
 
 const AuthProvider = ({ children }) => {
+	const [workoutLogs, setWorkoutLogs] = useState([])
 	const cookies = new Cookies(null, { path: "/" })
 	const [temporaryAuthCookie, setTemporaryAuthCookie] = useState()
 
@@ -372,6 +373,8 @@ const AuthProvider = ({ children }) => {
 				onLoginSubmit,
 				onSignUpSubmit,
 				setLoadingLogin,
+				workoutLogs,
+				setWorkoutLogs,
 			}}
 		>
 			{children}
