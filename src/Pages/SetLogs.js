@@ -17,10 +17,15 @@ import "react-datepicker/dist/react-datepicker.css"
 import { useMain } from "../Components/useMain"
 import { useAuth } from "../Components/useAuth"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faX } from "@fortawesome/free-solid-svg-icons"
+import { faSpinner, faX } from "@fortawesome/free-solid-svg-icons"
 
 const SetLogs = () => {
-	const [workoutLogs, setWorkoutLogs] = useState([])
+	const {
+		selectedDate,
+		selectedMuscle,
+		selectedWorkout,
+		handleDateChange,
+		handleMuscleSelect,
 		handleWorkoutSelect,
 		Toast,
 	} = useMain()
