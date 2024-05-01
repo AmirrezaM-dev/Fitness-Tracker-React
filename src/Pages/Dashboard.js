@@ -10,6 +10,8 @@ import {
 	Dropdown,
 } from "react-bootstrap"
 import { useAuth } from "../Components/useAuth"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { faX } from "@fortawesome/free-solid-svg-icons"
 
 const Dashboard = () => {
 	const { authApi } = useAuth()
@@ -130,6 +132,7 @@ const Dashboard = () => {
 									<th>Reps</th>
 									<th>Duration (minutes)</th>
 									<th>Date</th>
+									<th></th>
 								</tr>
 							</thead>
 							<tbody>
@@ -141,6 +144,9 @@ const Dashboard = () => {
 										<td>{workout.duration}</td>
 										<td>
 											{workout.selectedDate.split("T")[0]}
+										</td>
+										<td className="text-center">
+											<FontAwesomeIcon icon={faX} />
 										</td>
 									</tr>
 								))}
