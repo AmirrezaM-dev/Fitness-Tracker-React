@@ -210,6 +210,10 @@ const AuthProvider = ({ children }) => {
 				.catch(loginCatchHandler)
 				.finally(() => {
 					setFirstLogin(true)
+					cookies.set("serverStarted", true, {
+						path: "/",
+						expires: new Date(Date.now() + 900000),
+					})
 				})
 		}
 		setValidator({})
