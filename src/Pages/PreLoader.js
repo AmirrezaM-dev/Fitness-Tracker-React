@@ -19,7 +19,7 @@ const Preloader = () => {
 					expires: new Date(Date.now() + 900000),
 				})
 			}
-		}, 1666) // Update progress every second
+		}, 500) // Update progress every second
 
 		return () => clearInterval(interval)
 		// eslint-disable-next-line react-hooks/exhaustive-deps
