@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react"
+import React, { useEffect, useRef, useState } from "react"
 import {
 	Container,
 	Row,
@@ -18,6 +18,7 @@ import { useMain } from "../Components/useMain"
 import { useAuth } from "../Components/useAuth"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faSpinner, faX } from "@fortawesome/free-solid-svg-icons"
+import "../assets/setLogs.css"
 
 const SetLogs = () => {
 	const {
@@ -44,11 +45,9 @@ const SetLogs = () => {
 		if (Math.ceil(workoutLogs.length / itemsPerPage) < currentPage)
 			setCurrentPage(Math.ceil(workoutLogs.length / itemsPerPage) + 1)
 	}, [workoutLogs, currentPage])
-
 	const [weight, setWeight] = useState("")
 	const [reps, setReps] = useState("")
 	const [duration, setDuration] = useState("")
-
 	const handleSubmit = (event) => {
 		event.preventDefault()
 		setIsLoading(true)
@@ -85,7 +84,6 @@ const SetLogs = () => {
 				setDuration("")
 			})
 	}
-
 	useEffect(() => {
 		if (selectedDate && selectedWorkout)
 			authApi
@@ -100,7 +98,6 @@ const SetLogs = () => {
 				})
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [selectedDate, selectedWorkout])
-
 	const muscles = ["Chest", "Back", "Shoulders", "Legs", "Arms"]
 	const workoutsByMuscle = {
 		Chest: [
@@ -267,8 +264,10 @@ const SetLogs = () => {
 		],
 	}
 
+	const workoutRef = useRef(null)
+	const submitFormRef = useRef(null)
 	return (
-		<div>
+		<div className="workout-logs">
 			<Container className="mt-5">
 				<Row>
 					<Col className="text-center">
@@ -287,12 +286,17 @@ const SetLogs = () => {
 									<ToggleButton
 										key={muscle}
 										type="radio"
-										variant="outline-primary"
+										variant="outline-light"
 										checked={selectedMuscle === muscle}
 										value={muscle}
-										onClick={() =>
+										onClick={() => {
+											setTimeout(() => {
+												workoutRef?.current?.scrollIntoView(
+													{ behavior: "auto" }
+												)
+											}, 100)
 											handleMuscleSelect(muscle)
-										}
+										}}
 									>
 										{muscle}
 									</ToggleButton>
@@ -302,7 +306,7 @@ const SetLogs = () => {
 					)}
 				</Row>
 				{selectedMuscle && (
-					<Row className="mt-4">
+					<Row className="mt-4" ref={workoutRef}>
 						<Col className="text-center">
 							<h2>Choose a Workout:</h2>
 							<div className="d-flex flex-wrap">
@@ -319,11 +323,16 @@ const SetLogs = () => {
 												width: "200px",
 												cursor: "pointer",
 											}}
-											onClick={() =>
+											onClick={() => {
+												setTimeout(() => {
+													submitFormRef?.current?.scrollIntoView(
+														{ behavior: "auto" }
+													)
+												}, 100)
 												handleWorkoutSelect(
 													workout.name
 												)
-											}
+											}}
 										>
 											<Card.Img
 												variant="top"
@@ -344,7 +353,7 @@ const SetLogs = () => {
 			</Container>
 			{selectedWorkout && (
 				<>
-					<Container className="mt-4 text-center">
+					<Container ref={submitFormRef} className="mt-4 text-center">
 						<h3>Selected Workout: {selectedWorkout}</h3>
 						<Container className="my-5">
 							<h2 className="mb-4">Submit Workout Details</h2>

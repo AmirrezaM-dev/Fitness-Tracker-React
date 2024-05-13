@@ -1,5 +1,6 @@
 import React from "react"
 import { Container, Spinner } from "react-bootstrap"
+import "../assets/preloader.css"
 
 const Preloader = () => {
 	return (

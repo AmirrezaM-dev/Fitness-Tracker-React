@@ -1,5 +1,5 @@
 import ReactDOM from "react-dom/client"
-import "./index.css"
+import "./assets/index.css"
 import "bootstrap/dist/css/bootstrap.min.css"
 import App from "./App"
 import { HashRouter as Router } from "react-router-dom"

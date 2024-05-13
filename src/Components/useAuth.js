@@ -90,7 +90,7 @@ const AuthProvider = ({ children }) => {
 	}
 	const loginCatchHandler = (e) => {
 		if (e.config.url !== "/api/users/get/") {
-			if (e.response && e.response.data && e.response.data.message)
+			if (e?.response?.data?.message)
 				Toast.fire({
 					icon: "error",
 					title: e.response.data.message,
@@ -106,17 +106,17 @@ const AuthProvider = ({ children }) => {
 					...validator,
 					email: false,
 					emailFeedback:
-						e?.response.data.message &&
+						e?.response?.data?.message &&
 						e.response.data.message === "Email already exists"
 							? e.response.data.message
 							: "Invalid Credentials",
 					password:
-						e?.response.data.message &&
+						e?.response?.data?.message &&
 						e.response.data.message !== "Email already exists"
 							? false
 							: undefined,
 					passwordFeedback:
-						e?.response.data.message &&
+						e?.response?.data?.message &&
 						e.response.data.message !== "Email already exists"
 							? "Invalid Credentials"
 							: "",

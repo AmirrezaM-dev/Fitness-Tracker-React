@@ -1,0 +1,15 @@
+.workout-logs {
+	color: white;
+}
+.workout-card {
+	width: 200px;
+	cursor: pointer;
+	transition: box-shadow 0.3s ease;
+}
+.workout-card:hover {
+	box-shadow: 0 8px 16px #999999; /* Adjusted for hover effect */
+}
+.workout-card.selected {
+	box-shadow: 0 0 20px #999999; /* Flashy shadow effect for selected card */
+	transition: box-shadow 0.3s ease;
+}

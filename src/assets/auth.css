@@ -1,0 +1,75 @@
+/* LoginContainer.css */
+.login-container {
+	min-height: 100vh;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background-image: linear-gradient(to bottom left, #343a40, #17a2b8);
+}
+.login-container p,
+.signup-container p {
+	color: black;
+}
+.login-form {
+	background-color: #ffffff;
+	padding: 30px;
+	border-radius: 8px;
+	box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+.login-form h2 {
+	font-size: 24px;
+	font-weight: bold;
+	color: #333333;
+}
+.login-form p {
+	margin-bottom: 0;
+}
+.btn-block {
+	width: 100%;
+}
+@media (max-width: 768px) {
+	.login-form {
+		padding: 20px;
+	}
+}
+/* SignupContainer.css */
+.signup-container {
+	min-height: 100vh;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background-image: linear-gradient(to bottom right, #343a40, #17a2b8);
+}
+
+.signup-form {
+	background-color: #ffffff;
+	padding: 30px;
+	border-radius: 8px;
+	box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.signup-form h2 {
+	font-size: 24px;
+	font-weight: bold;
+	color: #333333;
+}
+
+.signup-form p {
+	margin-bottom: 0;
+}
+
+.btn-block {
+	width: 100%;
+}
+
+@media (max-width: 768px) {
+	.signup-form {
+		padding: 20px;
+	}
+}
+
+.google-auth div div iframe {
+	margin-left: auto !important;
+	margin-right: auto !important;
+	margin-top: 15px !important;
+}

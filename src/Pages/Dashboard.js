@@ -12,6 +12,7 @@ import {
 import { useAuth } from "../Components/useAuth"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faSpinner, faX } from "@fortawesome/free-solid-svg-icons"
+import "../assets/dashboard.css"
 
 const Dashboard = () => {
 	const { authApi } = useAuth()
@@ -76,6 +77,7 @@ const Dashboard = () => {
 									<DropdownButton
 										id="dropdown-columns"
 										title={`Columns per row: ${itemsPerPage}`}
+										variant={"light"}
 									>
 										{[10, 25, 50, 100].map((num) => (
 											<Dropdown.Item

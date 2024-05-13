@@ -1,0 +1,13 @@
+body {
+	margin: 0;
+	padding: 0;
+	background: #17a2b8;
+}
+main {
+	min-height: 100vh;
+	height: auto;
+	background: linear-gradient(to top right, #343a40, #17a2b8);
+}
+.cursor-pointer {
+	cursor: pointer !important;
+}

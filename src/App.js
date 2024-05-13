@@ -36,14 +36,14 @@ const App = () => {
 	) : (
 		<>
 			<Navigation />
-			<div className={loggedIn ? "pt-5" : ""}>
+			<main className={loggedIn ? "pt-5" : ""}>
 				<Routes>
 					<Route path={"/signin"} element={<LoginForm />} />
 					<Route path={"/signup"} element={<SignUpForm />} />
 					<Route path={"/"} element={<Dashboard />} />
 					<Route path={"/set"} element={<SetLogs />} />
 				</Routes>
-			</div>
+			</main>
 		</>
 	)
 }

@@ -4,6 +4,7 @@ import { useAuth } from "../Components/useAuth"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faSpinner } from "@fortawesome/free-solid-svg-icons"
 import { GoogleLogin } from "@react-oauth/google"
+import "../assets/auth.css"
 
 const LoginForm = () => {
 	const {

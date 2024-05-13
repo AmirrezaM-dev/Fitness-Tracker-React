@@ -1,0 +1,36 @@
+.container {
+	color: white;
+}
+.card {
+	margin-bottom: 20px;
+	border: 1px solid #ddd;
+	border-radius: 5px;
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+.card-title {
+	font-size: 20px;
+	font-weight: bold;
+}
+.card-text {
+	font-size: 16px;
+}
+@media (max-width: 768px) {
+	.container {
+		padding-left: 15px;
+		padding-right: 15px;
+	}
+}
+/* Specific Styles for Dashboard Components */
+.row {
+	display: flex;
+	justify-content: space-between;
+}
+.col {
+	flex-basis: calc(33.33% - 20px);
+}
+@media (max-width: 768px) {
+	.col {
+		flex-basis: 100%;
+		margin-bottom: 20px;
+	}
+}
